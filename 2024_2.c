@@ -1,3 +1,25 @@
+/*
+    advent of code 2024, excercise 1
+    author: Phillip Liu, July 8 2026
+
+    instructions:
+
+    a report only counts as safe if both of the following are true:
+
+    1. The rows are either all increasing or all decreasing.
+    2. Any two adjacent columns differ by at least one and at most three.
+*/
+
+
+/*
+    plan: 
+    1. initialize a 2d array containing the matrix ints
+    2. check if each row is either all increasing or all decreasing.
+    3. check if any two adjacent columns differ by at least one and at most three.
+    4. if both conditions are true then the row is safe.
+
+*/
+
 #include<stdio.h>
 #include<stdbool.h>
 #include<stdlib.h>
@@ -63,16 +85,23 @@ inc_dec_both check_increasing_or_decreasing( int rows, int columns, int matrix[r
 
 inc_dec_too_much check_too_much( int rows, int columns, int matrix[rows][columns]){
 
-    inc_dec_too_much mystruct = { .data = {1,1,1,1,1,1} };
+    /*
+     keep data values 1. 
+     this matters later because if a row is not safe then it will be set to 0. 
+     If it is safe then it will remain 1.
+     Later on i will compare the two structs from the functions: 
+     check_too_much() and check_increasing_or_decreasing(), and if both are 1 then the row is safe. 
+     If either one is 0 then the row is not safe.
+    */
+    
+    inc_dec_too_much mystruct = { .data = {1,1,1,1,1,1} }; 
     int keep_track_too_much[6] = {0, 0, 0, 0, 0, 0};
-
-    //check if row is increasing
+    
     // Outer loop iterates through each row 
     for (int row = 0; row < rows; row++) {
         // Inner loop iterates through each column in the current row
         for (int col = 1; col < columns; col++) {
-
-            // check if the column before is less than the column after.
+            // check if column before and column after differ by more than 3
             if(abs(matrix[row][col-1] - matrix[row][col]) > 3){
             
                 keep_track_too_much[row] = 1;
